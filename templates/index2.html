@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chatbot Demo</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#submit-button").click(function() {
+				var question = $("#question-input").val();
+				$.ajax({
+					type: "POST",
+					url: "/api/chatbot",
+					data: JSON.stringify({"question": question}),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(response) {
+						$("#answer-output").text(response.answer);
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>Chatbot Demo</h1>
+	<label for="question-input">Question:</label>
+	<input type="text" id="question-input">
+	<button type="button" id="submit-button">Submit</button>
+	<p><strong>Answer:</strong> <span id="answer-output"></span></p>
+</body>
+</html>

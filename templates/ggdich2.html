@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Text Translation</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #f1f3f4;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #header img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    #main {
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input[type="submit"] {
+      background-color: #4285f4;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #2c6db2;
+    }
+
+    #footer {
+      background-color: #f1f1f1;
+      color: #555;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google logo">
+    Text Translation
+  </header>
+
+  <div id="main">
+    <form method="post" action="/translate">
+      <label for="source_text">Source Text:</label>
+      <textarea name="source_text" id="source_text" placeholder="Enter text" required></textarea>
+	  <label for="source_lang">Source Language:</label>
+      <select name="source_lang" id="source_lang" required>
+		<option value="vi">Vietnamese</option>
+	  </select>
+
+	  <label for="target_lang">Target Language:</label>
+	  <select name="target_lang" id="target_lang" required>
+		<option value="en">English</option>
+	  </select>
+
+	  <input type="submit" value="Translate">
+    </form>
+    {% if target_text %}
+      <h2>Result:</h2>
+      <p><b>Source Text:</b> {{ source_text }}</p>
+      <p><b>Target Text:</b> {{ target_text }}</p>
+      <form method="post" action="/translate">
+        <input type="hidden" name="source_text" value="{{ target_text }}">
+        <input type="hidden" name="source_lang" value="{{ target_lang }}">
+        <input type="hidden" name="target_lang" value="{{ source_lang }}">
+        <input type="submit" value="Translate back">
+      </form>
+    {% endif %}
+  </div>
+</body>
+</html>
